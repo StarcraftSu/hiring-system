@@ -77,52 +77,46 @@ export default {
         .text("");
     },
     login() {
-
-	console.log(this.$router);
-	this.$router.addRoutes(this.$store.state.perms.addRouters);
-      this.$router.push("/work");
-
-
-    //   if (this.params.userName == "" || this.params.password == "") {
-    //     this.requireUserName();
-    //     this.requirePwd();
-    //   } else {
-    //     this.loading = true;
-    //     this.loginFont = "正在登录...";
-    //     this.$store
-    //       .dispatch("userLogin", this.params)
-    //       .then(res => {
-    //         if (res.code == "200") {
-    //           this.$store
-    //             .dispatch("setRouters")
-    //             .then(res => {
-    //               if (res.code == "200") {
-    //                this.$router.addRoutes(this.$store.state.perms.addRouters);
-    //                this.$router.push("/work");
-    //                 this.loginFont = "登录";
-    //                this.loading = false;     
-    //               } else {
-    //                 this.restInfo();
-    //               }
-    //             })
-    //             .catch(error => {
-    //               this.restInfo();
-    //             });
-    //         } else if(res.code == "304"){
-    //           this.errorMessage("用户或密码名错误!");
-    //           this.restInfo();
-    //         }else if(res.code == "301"){
-    //           this.errorMessage(res.message+"!");
-    //           this.restInfo();
-    //         }else if(res.code == "209"){
-    //           // this.errorMessage(res.message+"!");
-    //           this.restInfo();
-    //         }
-        //   })
-        //   .catch(error => {
-        //     this.restInfo();
-        //   });
-    //   }
+      if (this.params.userName == "" || this.params.password == "") {
+        this.requireUserName();
+        this.requirePwd();
+      } else {
+        this.loading = true;
+        this.loginFont = "正在登录...";
+        this.$store
+          .dispatch("userLogin", this.params)
+          .then(res => {
+            if (res.code == "200") {
+              this.$store
+                .dispatch("setRouters")
+                .then(res => {
+                  if (res.code == "200") {
+                   this.$router.addRoutes(this.$store.state.perms.addRouters);
+                   this.$router.push("/work");
+                    this.loginFont = "登录";
+                   this.loading = false;     
+                  } else {
+                    this.restInfo();
+                  }
+                })
+                .catch(error => {
+                  this.restInfo();
+                });
+            } else if(res.code == "304"){
+              this.errorMessage("用户或密码名错误!");
+              this.restInfo();
+            }else if(res.code == "301"){
+              this.errorMessage(res.message+"!");
+              this.restInfo();
+            }else if(res.code == "209"){
+              // this.errorMessage(res.message+"!");
+              this.restInfo();
+            }
+          })
+          .catch(error => {
+            this.restInfo();
+          });
+      }
     },
     restInfo() {
       this.loading = false;
